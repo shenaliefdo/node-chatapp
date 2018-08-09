@@ -4,7 +4,6 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const path_plan = path.join(__dirname,'../public');
-//console.log(path_plan);
 
 var port = process.env.PORT || 3000;
 
@@ -18,9 +17,21 @@ app.use(express.static(path_plan));
 io.on('connection',function(socket){
     console.log('new user connection');  
     
+    socket.emit('newMessage',{
+        from:'shenalie',
+        text:'hey, whats going on.',
+        createAt: 124 
+    });
+    
+    socket.on('createMessage',function(msg){
+        console.log('createMessage:', msg);
+    });  
+
     socket.on('disconnect',function(socket){
         console.log('user disconnected');
     });
+
+    
 });
 
 
