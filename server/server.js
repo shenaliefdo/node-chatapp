@@ -25,6 +25,11 @@ io.on('connection',function(socket){
     
     socket.on('createMessage',function(msg){
         console.log('createMessage:', msg);
+        io.emit('newMessage',{
+            from: msg.from,
+            text: msg.text,
+            createAt: new Date().getTime()
+        });
     });  
 
     socket.on('disconnect',function(socket){

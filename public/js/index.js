@@ -7,7 +7,7 @@ socket.on('connect',function(){
         to:'Tyler',
         text:'hi bubs' 
     });  
-});
+}); 
 
 socket.on('disconnect',function(){
     console.log('disconnected from server');
