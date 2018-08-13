@@ -2,7 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
-const {generateMessage}= require('./utils/msg');
+const {generateMessage,generateLocationMessage}= require('./utils/msg');
 
 const path_plan = path.join(__dirname,'../public');
 
@@ -36,10 +36,16 @@ io.on('connection',function(socket){
         // });
     });  
 
+    socket.on('createLocationMessage',function(coords){
+        io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude, coords.longitude));
+    })
+
+
     socket.on('disconnect',function(socket){
         console.log('user disconnected');
     });
 
+    
     
 });
  
