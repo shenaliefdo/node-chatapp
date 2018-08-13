@@ -18,18 +18,32 @@ io.on('connection',function(socket){
     console.log('new user connection');  
     
     socket.emit('newMessage',{
-        from:'shenalie',
-        text:'hey, whats going on.',
-        createAt: 124 
+        from:'Admin',
+        text:'Welcome to the chatapp.',
+        createAt: new Date().getTime()
     });
+
+    socket.broadcast.emit('newMessage',{
+            from: 'Admin',
+            text: 'new user connected',
+            createAt: new Date().getTime()
+        });
+    
     
     socket.on('createMessage',function(msg){
         console.log('createMessage:', msg);
-        io.emit('newMessage',{
-            from: msg.from,
-            text: msg.text,
-            createAt: new Date().getTime()
-        });
+        //io.emit can be used to send msg to everyone including sender
+        // io.emit('newMessage',{
+        //     from: msg.from,
+        //     text: msg.text,
+        //     createAt: new Date().getTime()
+        // });
+        //emit to everyone but emitting socket
+        // socket.broadcast.emit('newMessage',{
+        //     from: msg.from,
+        //     text: msg.text,
+        //     createAt: new Date().getTime()
+        // });
     });  
 
     socket.on('disconnect',function(socket){
@@ -38,7 +52,7 @@ io.on('connection',function(socket){
 
     
 });
-
+ 
 
 
 //listen on port 3000
