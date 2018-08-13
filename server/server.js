@@ -2,6 +2,7 @@ const path = require('path');
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
+const {generateMessage}= require('./utils/msg');
 
 const path_plan = path.join(__dirname,'../public');
 
@@ -17,27 +18,15 @@ app.use(express.static(path_plan));
 io.on('connection',function(socket){
     console.log('new user connection');  
     
-    socket.emit('newMessage',{
-        from:'Admin',
-        text:'Welcome to the chatapp.',
-        createAt: new Date().getTime()
-    });
+    socket.emit('newMessage',generateMessage('Admin','Welcome to the Chat app'));
 
-    socket.broadcast.emit('newMessage',{
-            from: 'Admin',
-            text: 'new user connected',
-            createAt: new Date().getTime()
-        });
+    socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined')) ;
     
     
     socket.on('createMessage',function(msg){
         console.log('createMessage:', msg);
         //io.emit can be used to send msg to everyone including sender
-        // io.emit('newMessage',{
-        //     from: msg.from,
-        //     text: msg.text,
-        //     createAt: new Date().getTime()
-        // });
+       // io.emit('newMessage',generateMessage(msg.from,msg.text));
         //emit to everyone but emitting socket
         // socket.broadcast.emit('newMessage',{
         //     from: msg.from,
