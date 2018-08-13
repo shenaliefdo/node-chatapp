@@ -23,10 +23,11 @@ io.on('connection',function(socket){
     socket.broadcast.emit('newMessage',generateMessage('Admin','New User Joined')) ;
     
     
-    socket.on('createMessage',function(msg){
+    socket.on('createMessage',function(msg,callback){
         console.log('createMessage:', msg);
         //io.emit can be used to send msg to everyone including sender
-       // io.emit('newMessage',generateMessage(msg.from,msg.text));
+        io.emit('newMessage',generateMessage(msg.from,msg.text));
+        callback('this is from the server');
         //emit to everyone but emitting socket
         // socket.broadcast.emit('newMessage',{
         //     from: msg.from,
