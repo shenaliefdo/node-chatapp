@@ -64,7 +64,7 @@ socket.on('newLocationMessage',function(data){
     // a.attr('href',data.url);
     // li.append(a);   
     jQuery('#messages').append(html);
-    scrollToBottom();
+    scrollToBottom(); 
 });
 
 jQuery('#msg-form').on('submit',function(E){
