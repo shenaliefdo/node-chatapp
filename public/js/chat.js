@@ -18,12 +18,18 @@ function scrollToBottom(){
 };
 
 socket.on('connect',function(){
-    console.log('connected to server');
-    
-    // socket.emit('createMessage',{
-    //     to:'Tyler',
-    //     text:'hi bubs' 
-    // });  
+     var params = jQuery.deparam(window.location.search);
+
+     socket.emit('join',params,function(err){
+         if(err){
+            alert(err);
+            window.location.href = '/';
+         }
+            console.log("no error");
+         
+     });  
+   // console.log("new user connected");
+
 });
 
 socket.on('disconnect',function(){
@@ -47,6 +53,10 @@ socket.on('newMessage',function(msg){
     scrollToBottom();
 });
  
+socket.on('updateUserList',function(users){
+    console.log(users);
+});
+
 socket.on('newLocationMessage',function(data){
     var time = moment(data.createAt).format('h:mm a');  
     var template = jQuery('#location-template').html();
